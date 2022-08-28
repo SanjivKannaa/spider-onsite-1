@@ -1,38 +1,56 @@
-import datetime
 import mysql.connector as sql
 
-
+print('making connection to db')
 connection = sql.connect(host='sql6.freemysqlhosting.net', user='sql6513340', password='Iluqh1ZCX3', database='sql6513340')
 c = connection.cursor()
 c.execute('''CREATE TABLE IF NOT EXISTS login_info(
-    email CHAR(9) PRIMARYKEY,
-    name CHAR(10),
-    password VARCHAR(256)
+    username VARCHAR(100) PRIMARY KEY,
+    password VARCHAR(100)
 )''')
 connection.commit()
 
 
-def put_login_info(email, name, password):
-    c.execute('INSERT INTO login_info(email, name, password) VALUES({}, {}, {})'.format(email, name, password))
+print('made connection to db')
+def init():
+    c.execute('DROP TABLE login_info')
+    c.execute('''CREATE TABLE IF NOT EXISTS login_info(
+        username VARCHAR(100) PRIMARY KEY,
+        password VARCHAR(100)
+    )''')
+    c.execute('INSERT INTO login_info (username, password) VALUES ("sanjiv", "sanjiv")')
     connection.commit()
 
 
-def get_login_info(email):
-    c.execute('SELECT * FROM login_info WHERE email={}'.format(email))
+def put_login_info(username, password):
+    c.execute('INSERT INTO login_info (username, password) VALUES ("{}", "{}")'.format(username, password))
+    connection.commit()
+
+
+def get_login_info(username):
+    # preventing SQLi by validating username
+    username_validated = username.split()[0]
+    c.execute('SELECT * FROM login_info WHERE username="{}"'.format(username_validated))
     return list(c.fetchall())
 
 
-def signup(email, name, password1, password2):
-    login_content = get_login_info(email)
-    if login_content == "" and password1 == password2:
-        put_login_info(email, name, password1)
+def signup(username, password1, password2):
+    login_content = get_login_info(username)
+    if login_content == [] and password1 == password2:
+        put_login_info(username, password1)
+
+def check_user(username):
+    username_validated = username.split()[0]
+    c.execute('SELECT * FROM login_info WHERE username="{}"'.format(username_validated))
 
 
-def check_login(email, password):
-    data = get_login_info(email)
-    if email in data and password in data :
-        return [True, ""]
-    if data == '':
+def check_login(username, password):
+    data = get_login_info(username)
+    try:
+        if username == data[0][0] and password == data[0][1] :
+            return [True, ""]
+        else:
+            return [False, "wrong password"]
+    except:
         return [False, "no user"]
-    else:
-        return [False, "wrong password"]
+
+print('passed database')

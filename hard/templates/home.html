@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>home</title>
+    <style>
+        .form_holder{
+            position: fixed;
+            margin-top: 400px;
+            margin-left: 37.5%;
+            display:inline;
+            align-items:center;
+            vertical-align: auto;
+            justify-content: center;
+            height: 200px;
+            width: 25%;
+            border-radius: 50px;
+            border: 3px solid green;
+            background-color: white;
+            font-family: 'system-ui';
+            box-shadow: 5px 5px 10px rgb(0,0,0,0.3);
+            align-self: center;
+            text-align: center;
+        }
+        .buttons{
+            height: 50px;
+            width: 200px;
+            border-radius: 50px;
+            font-size: 22px;
+        }
+    </style>
+    <script type="text/javascript">
+        function login(){
+            window.open('./login', '_self');
+        }
+        function signup(){
+            window.open('./signup', '_self');
+        }
+    </script>
+</head>
+<body>
+    <div class="form_holder">
+        <br><br>
+        <button class="buttons" onclick="login()">login</button>
+        <br><br><br>
+        <button class="buttons" onclick="signup()">sign up</button>
+    </div>
+</body>
+</html>
