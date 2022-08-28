@@ -1,0 +1,1 @@
+bash ./main.sh | at 6pm

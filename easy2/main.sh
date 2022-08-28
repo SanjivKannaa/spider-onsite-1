@@ -3,7 +3,7 @@ ps -eo pid,%mem --sort=-%mem > cpudata.txt
 touch log.log
 
 #awk '$2 >= 60{print $1}' cpudata.txt
-awk '$2 >= 80{print $1}' cpudata.txt > pid.txt
+awk '$2 >= 0{print $1}' cpudata.txt > pid.txt
 
 
 while read -r line
@@ -12,4 +12,3 @@ do
 done < pid.txt
 rm cpudata.txt
 rm pid.txt
-

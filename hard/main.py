@@ -1,8 +1,7 @@
 import mysql.connector as sql
-from flask import Flask, jsonify, make_response, redirect, render_template, request
+from flask import Flask, make_response, redirect, render_template, request
 import database
-import pickle
-
+from flask_sock import Sock
 
 app = Flask(__name__)
 
